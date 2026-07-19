@@ -17,7 +17,7 @@ PASS  claude           run 1    42.7s  1/1 checks
 PASS  codex            run 1     1.7m  1/1 checks
 ```
 
-That is the [real bundled fixture smoke test](examples/fix-calculator/runs/2026-07-19T09-44-31-437Z-fix-tax-calculation/report.md),
+That is the [real bundled fixture smoke test](docs/smoke-test.md),
 not a mock leaderboard. No API wrapper. No LLM judge. No RepoRace account. Zero
 runtime dependencies.
 
