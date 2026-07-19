@@ -1,0 +1,16 @@
+# RepoRace
+
+RepoRace is an MIT-licensed Node.js CLI that compares coding agents on real
+repository tasks. Each agent receives an identical disposable source copy and
+task prompt. User-defined commands provide deterministic pass/fail checks.
+
+Primary commands:
+- `reporace init`: scaffold config and task
+- `reporace agents`: list agent commands
+- `reporace run <task.json>`: execute a race and write artifacts
+- `reporace report <result.json>`: regenerate Markdown and HTML reports
+
+Machine-readable output: `.reporace/runs/*/result.json`.
+Use `--json` on `run` or `agents` for parseable stdout.
+Full documentation: README.md.
+Contribution rules: CONTRIBUTING.md and AGENTS.md.

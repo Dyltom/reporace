@@ -1,0 +1,11 @@
+{
+  "source": "./source",
+  "runsDir": "./runs",
+  "agents": {
+    "codex": {
+      "command": ["codex", "exec", "--sandbox", "workspace-write", "--skip-git-repo-check", "-C", "{{workspace}}", "-"],
+      "stdin": "{{prompt}}",
+      "timeoutMs": 600000
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "name": "reporace",
+  "version": "0.1.0",
+  "description": "Race coding agents on real repository tasks with isolated workspaces and deterministic checks.",
+  "type": "module",
+  "bin": {
+    "reporace": "bin/reporace.js"
+  },
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "schema",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "test:coverage": "node --test --experimental-test-coverage",
+    "check": "npm run test && npm pack --dry-run",
+    "demo": "node bin/reporace.js run examples/fix-calculator/task.json --config examples/fix-calculator/reporace.config.json"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "ai",
+    "coding-agent",
+    "evaluation",
+    "benchmark",
+    "codex",
+    "claude",
+    "gemini",
+    "cli"
+  ],
+  "license": "MIT",
+  "author": "Dylan Henderson",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dyltom/reporace.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Dyltom/reporace/issues"
+  },
+  "homepage": "https://github.com/Dyltom/reporace#readme"
+}

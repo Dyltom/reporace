@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Dyltom/reporace/main/schema/result.schema.json",
+  "title": "RepoRace result",
+  "type": "object",
+  "required": ["schemaVersion", "task", "startedAt", "finishedAt", "source", "results", "summary", "reportPaths"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "task": { "type": "object", "required": ["id", "title"] },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "finishedAt": { "type": "string", "format": "date-time" },
+    "source": { "type": "string" },
+    "results": { "type": "array", "items": { "type": "object" } },
+    "summary": {
+      "type": "object",
+      "required": ["total", "passed", "failed"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "reportPaths": { "type": "object" }
+  }
+}

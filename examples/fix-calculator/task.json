@@ -1,0 +1,12 @@
+{
+  "id": "fix-tax-calculation",
+  "title": "Fix percentage tax calculation",
+  "prompt": "The calculator's tax behavior is wrong. Reproduce the test failure, fix the root cause, and run the tests. Keep the public function signature unchanged.",
+  "checks": [
+    {
+      "name": "tests",
+      "command": ["npm", "test"]
+    }
+  ],
+  "repetitions": 1
+}
