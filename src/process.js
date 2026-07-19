@@ -42,12 +42,15 @@ export async function runCommand({ command, cwd, env = {}, stdin, timeoutMs = 30
   }, timeoutMs);
 
   const exit = await new Promise((done) => {
-    child.once("error", (error) => done({ code: null, signal: null, error: error.message }));
-    child.once("exit", (code, signal) => done({ code, signal }));
+    let spawnError;
+    child.once("error", (error) => {
+      spawnError = error.message;
+    });
+    child.once("close", (code, signal) => {
+      done({ code, signal, ...(spawnError ? { error: spawnError } : {}) });
+    });
   });
   clearTimeout(timer);
-  stdout.end();
-  stderr.end();
   await streamsFinished;
 
   return { ...exit, timedOut, durationMs: Date.now() - startedAt, command, stdoutPath, stderrPath };
