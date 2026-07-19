@@ -30,6 +30,11 @@ test("races agents, grades repository state, and writes reports", async () => {
   assert.equal(result.summary.passed, 1);
   assert.equal(result.results.find((run) => run.agentId === "fixer").passed, true);
   assert.equal(result.results.find((run) => run.agentId === "talker").passed, false);
+  assert.equal(
+    result.results.find((run) => run.agentId === "fixer").changes.available,
+    true,
+    result.results.find((run) => run.agentId === "fixer").changes.error
+  );
   assert.deepEqual(
     {
       filesChanged: result.results.find((run) => run.agentId === "fixer").changes.filesChanged,
