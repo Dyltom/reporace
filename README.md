@@ -1,5 +1,9 @@
 # RepoRace
 
+[![CI](https://github.com/Dyltom/reporace/actions/workflows/ci.yml/badge.svg)](https://github.com/Dyltom/reporace/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-c9ff54.svg)](LICENSE)
+[![Node.js 20+](https://img.shields.io/badge/node-%3E%3D20-c9ff54.svg)](package.json)
+
 **Race coding agents on real repository tasks. Tests decide the winner.**
 
 ![RepoRace real smoke-test report: Claude and Codex both pass with captured one-file patches](docs/demo.svg)

@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 — Unreleased
+## 0.1.0 — 2026-07-19
 
 - Run multiple coding-agent CLIs against identical repository copies.
 - Grade results with deterministic setup and check commands.
