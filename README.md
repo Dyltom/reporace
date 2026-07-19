@@ -13,12 +13,13 @@ identical disposable copy, the same prompt, and the same deterministic checks.
 Then it produces a replayable JSON, Markdown, and HTML result instead of a vibe.
 
 ```text
-PASS  codex            run 1    42.1s  2/2 checks
-FAIL  claude           run 1    31.8s  1/2 checks
-FAIL  gemini           run 1    55.4s  0/2 checks
+PASS  claude           run 1    42.7s  1/1 checks
+PASS  codex            run 1     1.7m  1/1 checks
 ```
 
-No API wrapper. No LLM judge. No account. Zero runtime dependencies.
+That is the [real bundled fixture smoke test](examples/fix-calculator/runs/2026-07-19T09-44-31-437Z-fix-tax-calculation/report.md),
+not a mock leaderboard. No API wrapper. No LLM judge. No RepoRace account. Zero
+runtime dependencies.
 
 ## Why RepoRace
 
@@ -45,20 +46,23 @@ workspace context and patch capture; races still run with patch reporting marked
 unavailable when Git is missing.
 
 ```bash
-npx reporace init
+# Install the current release directly from GitHub.
+npm install --global github:Dyltom/reporace#v0.1.0
+
+reporace init
 
 # Edit the generated task prompt and checks, then inspect commands first.
-npx reporace run .reporace/tasks/fix-example.json --dry-run
+reporace run .reporace/tasks/fix-example.json --dry-run
 
 # Run one agent.
-npx reporace run .reporace/tasks/fix-example.json --agent codex
+reporace run .reporace/tasks/fix-example.json --agent codex
 
 # Race three agents, two at a time.
-npx reporace run .reporace/tasks/fix-example.json \
+reporace run .reporace/tasks/fix-example.json \
   --agent codex --agent claude --agent gemini --concurrency 2
 
 # Give another agent or CI a parseable summary.
-npx reporace run .reporace/tasks/fix-example.json --agent codex --json
+reporace run .reporace/tasks/fix-example.json --agent codex --json
 ```
 
 Artifacts land under `.reporace/runs/<timestamp>-<task>/`:
