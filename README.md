@@ -2,6 +2,8 @@
 
 **Race coding agents on real repository tasks. Tests decide the winner.**
 
+![RepoRace real smoke-test report: Claude and Codex both pass with captured one-file patches](docs/demo.svg)
+
 Codex says it fixed the bug. Claude says the same. RepoRace gives each agent an
 identical disposable copy, the same prompt, and the same deterministic checks.
 Then it produces a replayable JSON, Markdown, and HTML result instead of a vibe.
@@ -34,7 +36,9 @@ exits successfully and every configured check passes.
 
 ## Quick start
 
-Requires Node.js 20+ and at least one coding-agent CLI.
+Requires Node.js 20+ and at least one coding-agent CLI. Git is recommended for
+workspace context and patch capture; races still run with patch reporting marked
+unavailable when Git is missing.
 
 ```bash
 npx reporace init
@@ -60,6 +64,7 @@ Artifacts land under `.reporace/runs/<timestamp>-<task>/`:
 - `report.html` — standalone visual report
 - `<agent>-<run>/logs/` — stdout and stderr for agent, setup, and checks
 - `<agent>-<run>/prompt.md` — exact task sent to the agent
+- `<agent>-<run>/changes.patch` — complete agent patch, including committed work
 
 `--json` keeps stdout machine-readable and returns summary plus artifact paths.
 The complete, versioned result always lives in `result.json`; its schema ships
@@ -86,6 +91,11 @@ as `schema/result.schema.json`.
 Commands may be argument arrays (safer, cross-platform) or shell strings. Checks
 run after the agent even if its process exits non-zero, because the repository
 state—not the agent's confidence—is the useful evidence.
+
+After setup, RepoRace initializes a private Git baseline in each workspace. This
+gives agents normal Git context and lets RepoRace capture every tracked or new
+non-ignored change as a patch. Your source repository and its history remain
+untouched.
 
 ## Configure agents
 

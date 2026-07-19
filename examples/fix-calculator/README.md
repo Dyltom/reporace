@@ -10,7 +10,7 @@ node ../../bin/reporace.js run task.json \
 
 node ../../bin/reporace.js run task.json \
   --config reporace.config.json \
-  --agent codex
+  --agent codex --agent claude --agent gemini --concurrency 3
 ```
 
 The original `source/` stays broken. RepoRace fixes and checks only its

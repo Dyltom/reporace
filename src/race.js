@@ -3,6 +3,7 @@ import { join, resolve } from "node:path";
 import { copySource, safeSegment } from "./workspace.js";
 import { displayCommand, interpolate, renderCommand, runCommand } from "./process.js";
 import { renderHtmlReport, renderMarkdownReport } from "./report.js";
+import { captureChanges, createBaseline } from "./git.js";
 
 function stamp() {
   return new Date().toISOString().replace(/[:.]/g, "-");
@@ -64,6 +65,9 @@ export async function runRace({ config, task, agentIds, concurrency = 1, keepWor
     }
 
     const setupPassed = setup.every((step) => step.passed);
+    const baseline = setupPassed
+      ? await createBaseline({ workspace, logsDir })
+      : { available: false, error: "Skipped because setup failed" };
     const renderedAgentCommand = renderCommand(agent.command, context);
     const agentResult = setupPassed ? await runCommand({
       command: renderedAgentCommand, cwd: workspace, env: agent.env,
@@ -84,7 +88,8 @@ export async function runRace({ config, task, agentIds, concurrency = 1, keepWor
       }
     }
     const passed = setupPassed && agentResult.code === 0 && !agentResult.timedOut && checks.every((check) => check.passed);
-    const value = { agentId, repetition, passed, setup, agent: agentResult, checks, workspace: keepWorkspaces ? workspace : null, runDir };
+    const changes = await captureChanges({ workspace, runDir, logsDir, baseline });
+    const value = { agentId, repetition, passed, setup, agent: agentResult, checks, changes, workspace: keepWorkspaces ? workspace : null, runDir };
     await writeFile(join(runDir, "result.json"), JSON.stringify(value, null, 2));
     if (!keepWorkspaces) await rm(workspace, { recursive: true, force: true });
     return value;

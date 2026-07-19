@@ -14,6 +14,11 @@ function ranked(results) {
   return [...results].sort((a, b) => Number(b.passed) - Number(a.passed) || a.agent.durationMs - b.agent.durationMs);
 }
 
+function changeCount(run) {
+  if (!run.changes?.available) return "patch unavailable";
+  return `${run.changes.filesChanged} file${run.changes.filesChanged === 1 ? "" : "s"}`;
+}
+
 export function renderMarkdownReport(result) {
   const rows = ranked(result.results).map((run, index) =>
     `| ${index + 1} | ${run.agentId} | ${run.repetition} | ${mark(run.passed)} | ${duration(run.agent.durationMs)} | ${run.checks.filter((check) => check.passed).length}/${run.checks.length} |`
@@ -24,6 +29,7 @@ export function renderMarkdownReport(result) {
     `- Result: **${mark(run.passed)}**`,
     `- Agent exit: ${run.agent.code ?? "spawn error"}${run.agent.timedOut ? " (timed out)" : ""}`,
     `- Agent time: ${duration(run.agent.durationMs)}`,
+    `- Changes: ${run.changes?.available ? `${changeCount(run)}, +${run.changes.insertions}/-${run.changes.deletions}` : "unavailable"}`,
     ...run.checks.map((check) => `- ${check.name}: ${mark(check.passed)} (${duration(check.durationMs)})`),
     ""
   ]);
@@ -53,7 +59,7 @@ export function renderHtmlReport(result) {
   const cards = ranked(result.results).map((run, index) => `
     <article class="card ${run.passed ? "pass" : "fail"}">
       <div class="rank">#${index + 1}</div>
-      <div><h2>${escapeHtml(run.agentId)}</h2><p>Run ${run.repetition} · ${duration(run.agent.durationMs)}</p></div>
+      <div><h2>${escapeHtml(run.agentId)}</h2><p>Run ${run.repetition} · ${duration(run.agent.durationMs)} · ${changeCount(run)} changed</p></div>
       <strong>${mark(run.passed)}</strong>
       <ul>${run.checks.map((check) => `<li><span>${escapeHtml(check.name)}</span><b>${mark(check.passed)}</b></li>`).join("")}</ul>
     </article>`).join("");
@@ -68,7 +74,7 @@ export function renderHtmlReport(result) {
 export function consoleSummary(result) {
   const lines = ["", `RepoRace · ${result.task.title}`, ""];
   for (const run of ranked(result.results)) {
-    lines.push(`${mark(run.passed).padEnd(4)}  ${run.agentId.padEnd(16)} run ${run.repetition}  ${duration(run.agent.durationMs).padStart(7)}  ${run.checks.filter((check) => check.passed).length}/${run.checks.length} checks`);
+    lines.push(`${mark(run.passed).padEnd(4)}  ${run.agentId.padEnd(16)} run ${run.repetition}  ${duration(run.agent.durationMs).padStart(7)}  ${run.checks.filter((check) => check.passed).length}/${run.checks.length} checks  ${changeCount(run)}`);
   }
   lines.push("", `${result.summary.passed}/${result.summary.total} runs passed`, `Report: ${relative(process.cwd(), result.reportPaths.html) || result.reportPaths.html}`, "");
   return lines.join("\n");

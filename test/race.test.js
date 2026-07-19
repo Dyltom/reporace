@@ -13,7 +13,7 @@ test("races agents, grades repository state, and writes reports", async () => {
   const fixer = join(root, "fixer.mjs");
   const talker = join(root, "talker.mjs");
   const checker = join(root, "check.mjs");
-  await writeFile(fixer, `import { writeFile } from "node:fs/promises"; await writeFile("answer.txt", "42\\n"); console.log("fixed");`);
+  await writeFile(fixer, `import { writeFile } from "node:fs/promises"; import { execFileSync } from "node:child_process"; await writeFile("answer.txt", "42\\n"); execFileSync("git", ["add", "answer.txt"]); execFileSync("git", ["-c", "user.name=Test Agent", "-c", "user.email=agent@localhost", "commit", "--quiet", "-m", "fix answer"]); console.log("fixed and committed");`);
   await writeFile(talker, `console.log("Everything is fixed");`);
   await writeFile(checker, `import { readFile } from "node:fs/promises"; process.exit((await readFile("answer.txt", "utf8")).trim() === "42" ? 0 : 1);`);
   const config = {
@@ -30,6 +30,16 @@ test("races agents, grades repository state, and writes reports", async () => {
   assert.equal(result.summary.passed, 1);
   assert.equal(result.results.find((run) => run.agentId === "fixer").passed, true);
   assert.equal(result.results.find((run) => run.agentId === "talker").passed, false);
+  assert.deepEqual(
+    {
+      filesChanged: result.results.find((run) => run.agentId === "fixer").changes.filesChanged,
+      insertions: result.results.find((run) => run.agentId === "fixer").changes.insertions,
+      deletions: result.results.find((run) => run.agentId === "fixer").changes.deletions
+    },
+    { filesChanged: 1, insertions: 1, deletions: 1 }
+  );
+  assert.match(await readFile(result.results.find((run) => run.agentId === "fixer").changes.patchPath, "utf8"), /-wrong\n\+42/);
+  assert.equal(result.results.find((run) => run.agentId === "talker").changes.filesChanged, 0);
   assert.match(await readFile(result.reportPaths.markdown, "utf8"), /fixer.*PASS/);
   assert.match(await readFile(result.reportPaths.html, "utf8"), /Same task\. Isolated workspaces\. Checks decide\./);
   await access(result.reportPaths.json);

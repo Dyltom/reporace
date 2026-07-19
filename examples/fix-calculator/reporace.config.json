@@ -6,6 +6,14 @@
       "command": ["codex", "exec", "--sandbox", "workspace-write", "--skip-git-repo-check", "-C", "{{workspace}}", "-"],
       "stdin": "{{prompt}}",
       "timeoutMs": 600000
+    },
+    "claude": {
+      "command": ["claude", "--print", "--dangerously-skip-permissions", "{{prompt}}"],
+      "timeoutMs": 600000
+    },
+    "gemini": {
+      "command": ["gemini", "--yolo", "--prompt", "{{prompt}}"],
+      "timeoutMs": 600000
     }
   }
 }

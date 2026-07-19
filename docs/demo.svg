@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="500" viewBox="0 0 1100 500" role="img" aria-labelledby="title desc">
+  <title id="title">RepoRace real coding-agent smoke test</title>
+  <desc id="desc">Claude and Codex received the same broken calculator repository. Both passed the deterministic test and changed one file.</desc>
+  <rect width="1100" height="500" rx="24" fill="#0d0e0c"/>
+  <rect x="1" y="1" width="1098" height="498" rx="23" fill="none" stroke="#34372f" stroke-width="2"/>
+  <circle cx="38" cy="35" r="7" fill="#ff6b6b"/>
+  <circle cx="62" cy="35" r="7" fill="#ffd166"/>
+  <circle cx="86" cy="35" r="7" fill="#c9ff54"/>
+  <text x="550" y="41" text-anchor="middle" fill="#8e9188" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15">reporace · real local smoke test</text>
+  <text x="54" y="105" fill="#c9ff54" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" font-weight="700" letter-spacing="2">SAME TASK · ISOLATED WORKSPACES · CHECKS DECIDE</text>
+  <text x="54" y="157" fill="#f5f4ef" font-family="system-ui, sans-serif" font-size="38" font-weight="750">Fix percentage tax calculation</text>
+  <text x="54" y="193" fill="#9da097" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">2/2 runs passed · patches captured · source untouched</text>
+  <rect x="54" y="232" width="992" height="86" rx="10" fill="#171815" stroke="#34372f"/>
+  <rect x="54" y="232" width="5" height="86" rx="2" fill="#c9ff54"/>
+  <text x="82" y="267" fill="#c9ff54" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="700">PASS</text>
+  <text x="159" y="269" fill="#f5f4ef" font-family="system-ui, sans-serif" font-size="23" font-weight="700">claude</text>
+  <text x="360" y="269" fill="#b6b8b1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">42.7s</text>
+  <text x="500" y="269" fill="#b6b8b1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">1/1 checks</text>
+  <text x="690" y="269" fill="#b6b8b1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">1 file · +1/−1</text>
+  <text x="159" y="298" fill="#787b73" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">Claude Code 2.1.206 · default model/config</text>
+  <rect x="54" y="333" width="992" height="86" rx="10" fill="#171815" stroke="#34372f"/>
+  <rect x="54" y="333" width="5" height="86" rx="2" fill="#c9ff54"/>
+  <text x="82" y="368" fill="#c9ff54" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="700">PASS</text>
+  <text x="159" y="370" fill="#f5f4ef" font-family="system-ui, sans-serif" font-size="23" font-weight="700">codex</text>
+  <text x="360" y="370" fill="#b6b8b1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">1.7m</text>
+  <text x="500" y="370" fill="#b6b8b1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">1/1 checks</text>
+  <text x="690" y="370" fill="#b6b8b1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16">1 file · +1/−1</text>
+  <text x="159" y="399" fill="#787b73" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">Codex CLI 0.144.1 · default model/config</text>
+  <text x="54" y="463" fill="#777a72" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">Compatibility smoke test, not a universal model ranking · 2026-07-19</text>
+</svg>
