@@ -11,7 +11,17 @@ node ../../bin/reporace.js run task.json \
 node ../../bin/reporace.js run task.json \
   --config reporace.config.json \
   --agent codex --agent claude --agent gemini --concurrency 3
+
+# Inspect the OpenCode command before running it.
+node ../../bin/reporace.js run task.json \
+  --config reporace.config.json --agent opencode --dry-run
+
+node ../../bin/reporace.js run task.json \
+  --config reporace.config.json --agent opencode
 ```
 
 The original `source/` stays broken. RepoRace fixes and checks only its
-disposable copy under `runs/`.
+disposable copy under `runs/`. The OpenCode entry uses its non-interactive
+`run` command, passes the disposable workspace with `--dir`, and sends the
+task prompt as a separate argument. OpenCode may need provider credentials
+configured before a real run.
