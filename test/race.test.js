@@ -4,6 +4,7 @@ import { access, mkdtemp, mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import { runRace } from "../src/race.js";
+import { loadConfig, loadTask } from "../src/config.js";
 
 test("races agents, grades repository state, and writes reports", async () => {
   const root = await mkdtemp(join(tmpdir(), "reporace-e2e-"));
@@ -58,4 +59,12 @@ test("dry-run renders plan without creating artifacts", async () => {
   const result = await runRace({ config, task, dryRun: true });
   assert.match(result.plan, /fake "Fix it"/);
   await assert.rejects(access(config.runsDir));
+});
+
+test("bundled OpenCode adapter renders workspace and prompt separately", async () => {
+  const config = await loadConfig("examples/fix-calculator/reporace.config.json");
+  const task = await loadTask("examples/fix-calculator/task.json");
+  const result = await runRace({ config, task, agentIds: ["opencode"], dryRun: true });
+  assert.match(result.plan, /opencode run --dir "<workspace>" "The calculator's tax behavior is wrong\./);
+  assert.doesNotMatch(result.plan, /opencode.*prompt-file/);
 });
